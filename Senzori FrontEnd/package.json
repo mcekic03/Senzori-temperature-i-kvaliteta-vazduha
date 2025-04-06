@@ -1,0 +1,12 @@
+{
+    "name": "senzori-oneview",
+    "version": "1.0.0",
+    "description": "Плагин за приказивање информација са сензора.",
+    "main": "script.js",
+    "scripts": {
+      "test": "run test"
+    },
+    "author": "Михајло Чекић",
+    "license": "ISC"
+  }
+  

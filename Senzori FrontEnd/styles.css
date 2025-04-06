@@ -1,0 +1,392 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: rgb(63,94,251);
+    background: radial-gradient(circle, rgba(63,94,251,1) 67%, rgba(70,252,118,1) 100%);
+    min-height: 100vh;
+    color: #333;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.425rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.sensor-data {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.location-info {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.location-info h2 {
+    color: #1e3c72;
+    font-size: 1.75rem;
+    margin: 0;
+}
+
+.location-info p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.metric-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 0.5s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.metric-card h3 {
+    color: #1e3c72;
+    margin-bottom: 15px;
+    font-size: 1.16rem;
+}
+
+.metric-card .value {
+    font-size: 2.425rem;
+    font-weight: bold;
+    color: #2a5298;
+    margin-bottom: 5px;
+}
+
+.metric-card .unit {
+    color: #666;
+    font-size: 0.87rem;
+}
+
+/* Индикатори нивоа опасности */
+.danger-level {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 0.87rem;
+    display: inline-block;
+}
+
+.danger-level.low {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.danger-level.moderate {
+    background-color: #FFC107;
+    color: #333;
+}
+
+.danger-level.unhealthy {
+    background-color: #FF9800;
+    color: white;
+}
+
+.danger-level.very-unhealthy {
+    background-color: #F44336;
+    color: white;
+}
+
+.danger-level.hazardous {
+    background-color: #9C27B0;
+    color: white;
+}
+
+.danger-level.pressure-high {
+    background-color: #9C27B0;
+    color: white;
+}
+
+.danger-level.pressure-low {
+    background-color: #2196F3;
+    color: white;
+}
+
+.danger-level.humidity-low {
+    background-color: #FFC107;
+    color: #333;
+}
+
+.danger-level.humidity-high {
+    background-color: #2196F3;
+    color: white;
+}
+
+/* Индикатор траке */
+.danger-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+/* Статус иконице */
+.status-icon {
+    font-size: 2.425rem;
+    margin: 1rem 0;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.status-icon i {
+    transition: all 0.3s ease;
+}
+
+.status-icon.animated i {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Специфични стилови за иконице */
+.status-icon i.fa-smile {
+    color: #4CAF50;
+}
+
+.status-icon i.fa-meh {
+    color: #FFC107;
+}
+
+.status-icon i.fa-frown {
+    color: #FF9800;
+}
+
+.status-icon i.fa-dizzy {
+    color: #F44336;
+}
+
+.status-icon i.fa-skull {
+    color: #9C27B0;
+}
+
+/* Анимације за иконице загађења */
+.status-icon i.fa-meh {
+    animation: float 3s ease-in-out infinite;
+}
+
+.status-icon i.fa-frown {
+    animation: shake 0.5s ease-in-out infinite;
+}
+
+.status-icon i.fa-dizzy {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.status-icon i.fa-skull {
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.last-update {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    padding: 8px;
+    border-top: 1px solid #eee;
+    margin-top: -5px;
+}
+
+/* Медија упири за мобилни приказ */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        
+    }
+    
+    h1 {
+        font-size: 1.94rem;
+        margin-bottom: 20px;
+    }
+    
+    .sensor-data {
+        margin-left: -0.4px;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 12px;
+    }
+    
+    .metric-card {
+        padding: 12px;
+    }
+    
+    /* Смањујемо величину иконица */
+    .status-icon {
+        font-size: 1.94rem;
+        margin: 0.5rem 0;
+    }
+    
+    /* Смањујемо величину вредности */
+    .metric-card .value {
+        font-size: 1.75rem;
+        margin-bottom: 5px;
+    }
+    
+    /* Смањујемо величину јединица мере */
+    .metric-card .unit {
+        font-size: 0.87rem;
+    }
+    
+    /* Смањујемо величину наслова */
+    .metric-card h3 {
+        font-size: 1.07rem;
+        margin-bottom: 10px;
+    }
+    
+    /* Смањујемо величину локације и времена */
+    .location-info h2 {
+        font-size: 1.55rem;
+    }
+    
+    .location-info p {
+        font-size: 1rem;
+    }
+    
+    .logo {
+        display: none;
+    }
+    
+    .last-update {
+        font-size: 0.85rem;
+        padding: 6px;
+    }
+}
+
+/* Додатни медија упит за веома мале екране */
+@media (max-width: 480px) {
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .metric-card {
+        padding: 10px;
+    }
+    
+    .metric-card .value {
+        font-size: 1.55rem;
+    }
+    
+    .status-icon {
+        font-size: 1.75rem;
+        margin: 0.4rem 0;
+    }
+    
+    .metric-card h3 {
+        font-size: 0.97rem;
+        margin-bottom: 8px;
+    }
+    
+    .location-info h2 {
+        font-size: 1.36rem;
+    }
+    
+    .location-info p {
+        font-size: 0.9rem;
+    }
+    
+    .logo {
+        display: none;
+    }
+    
+    .last-update {
+        font-size: 0.8rem;
+        padding: 4px;
+    }
+}
+
+.logo {
+    display: none;
+}
+
+.logo-left {
+    display: none;
+}
+
+.logo-right {
+    display: none;
+} 
