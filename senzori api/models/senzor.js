@@ -120,7 +120,73 @@ class Senzor {
             throw err; // Ako se desi greška, baci je dalje
         }
     }
+
+    static async procenti() {
+        try {
+            // SQL upit za poslednji unos prema timestamp-u
+            const sql = `
+                WITH senzA AS (
+  SELECT PMS_P1, timestamp, ROW_NUMBER() OVER (ORDER BY timestamp) AS rn
+  FROM senzor
+  WHERE esp8266id = '16160069' AND timestamp >= NOW() - INTERVAL 1 DAY
+),
+senzB AS (
+  SELECT PMS_P1, timestamp, ROW_NUMBER() OVER (ORDER BY timestamp) AS rn
+  FROM senzor
+  WHERE esp8266id = '9091332' AND timestamp >= NOW() - INTERVAL 1 DAY
+)
+SELECT
+  senzA.timestamp,
+  senzA.PMS_P1 AS temp_senzorA,
+  senzB.PMS_P1 AS temp_senzorB
+FROM senzA
+JOIN senzB ON senzA.rn = senzB.rn
+ORDER BY senzA.timestamp ASC;`;
+            
+            // Izvrši upit u bazu
+            const [rows] = await db.promise().query(sql);
+
+           const poruka =  this.compareSensors(rows)
+            return poruka;
+                
+        } catch (err) {
+            console.error("Greška pri dobijanju poslednjeg unosa:", err);
+            throw err; // Ako se desi greška, baci je dalje
+        }
+    }
+
+    static compareSensors(data) {
+        let totalA = 0; // Ukupna suma za senzor A
+        let totalB = 0; // Ukupna suma za senzor B
+      
+        // Prolazimo kroz sve objekte u nizu i sabiramo temperature za oba senzora
+        data.forEach(item => {
+          totalA += item.temp_senzorA;
+          totalB += item.temp_senzorB;
+        });
+      
+        // Izračunaj koji senzor je imao veću ukupnu temperaturu
+        let greaterSensor = '';
+        let percentageDifference = 0;
+      
+        if (totalA > totalB) {
+          greaterSensor = 'SamsungAppsLab';
+          percentageDifference = ((totalA - totalB) / totalB) * 100;
+        } else if (totalB > totalA) {
+          greaterSensor = 'ATVSS Odsek Nis';
+          percentageDifference = ((totalB - totalA) / totalA) * 100;
+        } else {
+          greaterSensor = 'Nema razlike';
+          percentageDifference = 0;
+        }
+        
+
+        // Vraćamo poruku u formatu stringa
+        return `${greaterSensor} je imao veću zagadjenost za ${percentageDifference.toFixed(2)}% u zadnjih 24h`;
+      }
     
 }
+
+    
 
 module.exports = Senzor;

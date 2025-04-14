@@ -23,6 +23,10 @@ body {
     width: 100%;
 }
 
+.logos-container {
+    width: 100%;
+}
+
 h1 {
     color: white;
     text-align: center;
@@ -288,6 +292,19 @@ h1 {
         gap: 12px;
         padding: 12px;
     }
+
+    #pm1{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    #pm25{
+        grid-column: 1;
+        grid-row: 2;
+    }
+    #pm10{
+        grid-column: 1;
+        grid-row: 3;
+    }
     
     .metric-card {
         padding: 12px;
@@ -390,3 +407,131 @@ h1 {
 .logo-right {
     display: none;
 } 
+
+.updating {
+    animation: updateValue 0.5s ease-out;
+}
+
+@keyframes updateValue {
+    0% {
+        transform: scale(1);
+        color: #2a5298;
+    }
+    50% {
+        transform: scale(1.2);
+        color: #ff6b6b;
+    }
+    100% {
+        transform: scale(1);
+        color: #2a5298;
+    }
+}
+
+.error-message {
+    text-align: center;
+    padding: 20px;
+    color: #ff6b6b;
+}
+
+/* Додатне боје за индикаторе */
+.danger-indicator.low {
+    background-color: #4CAF50;
+}
+
+.danger-indicator.moderate {
+    background-color: #FFC107;
+}
+
+.danger-indicator.unhealthy {
+    background-color: #FF9800;
+}
+
+.danger-indicator.very-unhealthy {
+    background-color: #F44336;
+}
+
+.danger-indicator.hazardous {
+    background-color: #9C27B0;
+}
+
+/* Анимација плавтања за све иконице */
+.status-icon i {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Стилови за контејнер */
+.container {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Стилови за сензор податке */
+.sensor-data {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 30px;
+}
+
+/* Мобилни приказ */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 10px;
+        max-width: 100%;
+    }
+
+    
+
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .metric-card {
+        padding: 10px;
+        border-radius: 10px;
+    }
+}
+
+/* Стилови за логотипе */
+.logos-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+}
+
+@media (max-width: 400px) {
+    .logos-container {
+      justify-content: center; /* 👈 centriranje kada idu jedan ispod drugog */
+    }
+
+}
+
+.logo {
+        width: 181.5px;
+        height: auto;
+        object-fit: contain;
+        display: block;
+        max-width: 100%;
+        padding: 5px;
+        padding-left: 12px;
+        padding-right: 12px;
+        border-radius: 15px;
+        border-color: white;
+}
+

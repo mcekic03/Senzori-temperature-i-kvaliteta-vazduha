@@ -182,11 +182,16 @@ function createHTMLStructure() {
     lastUpdate.className = 'last-update';
     lastUpdate.innerHTML = 'Последње ажурирање: <span id="timestamp"></span>';
 
+    const lastUpdate1 = document.createElement('div');
+    lastUpdate1.className = 'last-update';
+    lastUpdate1.innerHTML = '<span id="zagadjenost"></span>';
+
     // Спајање свих елемената
     container.appendChild(logosContainer);
     sensorData.appendChild(locationInfo);
     sensorData.appendChild(metricsGrid);
     sensorData.appendChild(lastUpdate);
+    sensorData.appendChild(lastUpdate1);
     container.appendChild(sensorData);
     document.body.appendChild(container);
 }
@@ -255,7 +260,7 @@ async function updateSensorData() {
             return;
         }
 
-        const sensorData = data[1];
+        const sensorData = data[0];
         console.log('Структура података сензора:', sensorData);
         console.log('Локација:', sensorData.location);
         console.log('Сви кључеви у објекту:', Object.keys(sensorData));
@@ -264,7 +269,7 @@ async function updateSensorData() {
         const locationTitle = document.getElementById('location-title');
         if (locationTitle) {
             if (sensorData.location) {
-                locationTitle.textContent = sensorData.location;
+                locationTitle.textContent = "Samsung Apps Lab" //sensorData.location;
             } else {
                 console.error('Локација није пронађена у подацима');
                 locationTitle.textContent = 'Локација недоступна';
@@ -273,7 +278,10 @@ async function updateSensorData() {
         
         // Ажурирање времена
         const timestamp = document.getElementById('timestamp');
+        const zagadjenost = document.getElementById('zagadjenost');
+    
         if (timestamp && sensorData.timestamp) {
+            zagadjenost.textContent = data[2];
             const date = new Date(sensorData.timestamp);
             timestamp.textContent = date.toLocaleString('sr-RS');
         }
@@ -344,7 +352,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 window.addEventListener('click', function(e) {
     console.log(e.target)
     if (e.target.classList.contains('appstim-logo')) {
-        window.location.href = 'samsungLab.html';
+        window.location.href = 'grafVazduh.html';
     }
     if (e.target.classList.contains('akademija-logo')) {
         window.location.href = 'index.html';

@@ -33,9 +33,9 @@ router.get('/GetSenzorData', async (req, res) => {
     try {
         const UlaznaVrata = await Senzor.poslednjiUnos('16160069');
         const SamsungAppsLab = await Senzor.poslednjiUnos('9091332')
-        
+        const poruka = await Senzor.procenti();
             //Ako postoji poslednji unos, vraćamo ga kao JSON
-            res.status(200).json([UlaznaVrata,SamsungAppsLab]);
+            res.status(200).json([UlaznaVrata,SamsungAppsLab, poruka]);
         
         
     } catch (err) {
