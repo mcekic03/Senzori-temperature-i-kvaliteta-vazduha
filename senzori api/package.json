@@ -1,0 +1,26 @@
+{
+  "name": "senzori",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon main.js",
+    "production": "pm2 reload ecosystem.config.js && pm2 save && pm2 monit",
+    "stop": "pm2 stop all && pm2 delete all && pm2 flush && pm2 kill"
+    
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "moment-timezone": "^0.5.48",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.14.0",
+    "nodemon": "^3.1.9",
+    "pm2": "^6.0.5"
+  }
+}
