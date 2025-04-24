@@ -75,21 +75,19 @@ function getHumidityDangerLevel(value) {
 }
 
 // Функција за ажурирање индикатора опасности
-function updateDangerIndicator(cardId, value, getDangerLevel) {
+function updateDangerIndicator(cardId, value, getDangerLevel, sensorIndex) {
     const card = document.getElementById(cardId);
     if (!card) return;
 
-    const dangerLevelElement = card.querySelector('.danger-level');
-    const dangerIndicatorElement = card.querySelector('.danger-indicator');
-    const statusIconElement = card.querySelector('.status-icon i');
+    const sensorValue = card.querySelectorAll('.sensor-value')[sensorIndex];
+    if (!sensorValue) return;
+
+    const dangerIndicatorElement = sensorValue.querySelector('.danger-indicator');
+    const statusIconElement = sensorValue.querySelector('.status-icon i');
     
-    if (!dangerLevelElement || !dangerIndicatorElement || !statusIconElement) return;
+    if (!dangerIndicatorElement || !statusIconElement) return;
 
     const dangerInfo = getDangerLevel(value);
-    
-    // Ажурирање текста и класе опасности
-    dangerLevelElement.textContent = dangerInfo.text;
-    dangerLevelElement.className = 'danger-level ' + dangerInfo.level;
     
     // Ажурирање боје индикатора
     dangerIndicatorElement.style.backgroundColor = getDangerColor(dangerInfo.level);
@@ -99,7 +97,7 @@ function updateDangerIndicator(cardId, value, getDangerLevel) {
     statusIconElement.style.color = getDangerColor(dangerInfo.level);
     
     // Додавање класе за анимацију ако је ниво опасности висок
-    const statusIcon = card.querySelector('.status-icon');
+    const statusIcon = sensorValue.querySelector('.status-icon');
     if (dangerInfo.level === 'hazardous' || dangerInfo.level === 'dangerous') {
         statusIcon.classList.add('animated');
     } else {
@@ -124,112 +122,6 @@ function getDangerColor(level) {
     return colors[level] || '#4CAF50';
 }
 
-// Функција за креирање HTML структуре
-function createHTMLStructure() {
-    // Креирање основног контејнера
-    const container = document.createElement('div');
-    container.className = 'container';
-
-    // Креирање контејнера за логотипе
-    const logosContainer = document.createElement('div');
-    logosContainer.className = 'logos-container';
-
-    // Креирање логотипа за Академију
-    const akademijaLogo = document.createElement('img');
-    akademijaLogo.src = 'Images/akademija.png';
-    akademijaLogo.alt = 'Академија';
-    akademijaLogo.className = 'logo akademija-logo';
-
-    // Креирање логотипа за Апстим
-    const appstimLogo = document.createElement('img');
-    appstimLogo.src = 'Images/appstim.png';
-    appstimLogo.alt = 'Апстим';
-    appstimLogo.className = 'logo appstim-logo';
-
-    // Додавање логотипа у контејнер
-    logosContainer.appendChild(akademijaLogo);
-    logosContainer.appendChild(appstimLogo);
-
-    // Креирање контејнера за податке сензора
-    const sensorData = document.createElement('div');
-    sensorData.className = 'sensor-data';
-
-    // Креирање информација о локацији
-    const locationInfo = document.createElement('div');
-    locationInfo.className = 'location-info';
-    
-    const locationTitle = document.createElement('h2');
-    const locationTitle2 = document.createElement('h4');
-    locationTitle2.textContent = "Мерење температуре и квалитета ваздуха";
-    locationTitle.id = 'location-title';
-    locationTitle.textContent = 'Учитавање...'; // Привремена вредност док се не учита локација
-    
-    locationInfo.appendChild(locationTitle);
-    locationInfo.appendChild(locationTitle2);
-
-    // Креирање мреже за метрике
-    const metricsGrid = document.createElement('div');
-    metricsGrid.className = 'metrics-grid';
-
-    // Креирање картица за сваку метрику
-    metrics.forEach(metric => {
-        const card = createMetricCard(metric);
-        metricsGrid.appendChild(card);
-    });
-
-    // Креирање времена ажурирања
-    const lastUpdate = document.createElement('div');
-    lastUpdate.className = 'last-update';
-    lastUpdate.innerHTML = 'Последње ажурирање: <span id="timestamp"></span>';
-
-    // Спајање свих елемената
-    container.appendChild(logosContainer);
-    sensorData.appendChild(locationInfo);
-    sensorData.appendChild(metricsGrid);
-    sensorData.appendChild(lastUpdate);
-    container.appendChild(sensorData);
-    document.body.appendChild(container);
-}
-
-// Функција за креирање картице метрике
-function createMetricCard({ id, name, unit, icon }) {
-    const card = document.createElement('div');
-    card.className = 'metric-card';
-    card.id = id;
-
-    const title = document.createElement('h3');
-    title.textContent = name;
-
-    const value = document.createElement('div');
-    value.className = 'value';
-    value.textContent = '0.00';
-
-    const unitElement = document.createElement('div');
-    unitElement.className = 'unit';
-    unitElement.textContent = unit;
-
-    const dangerLevel = document.createElement('div');
-    dangerLevel.className = 'danger-level';
-
-    const dangerIndicator = document.createElement('div');
-    dangerIndicator.className = 'danger-indicator';
-
-    const statusIcon = document.createElement('div');
-    statusIcon.className = 'status-icon';
-    const iconElement = document.createElement('i');
-    iconElement.className = `fas ${icon}`;
-    statusIcon.appendChild(iconElement);
-
-    card.appendChild(title);
-    card.appendChild(value);
-    card.appendChild(unitElement);
-    card.appendChild(dangerLevel);
-    card.appendChild(dangerIndicator);
-    card.appendChild(statusIcon);
-
-    return card;
-}
-
 // Функција за ажурирање података сензора
 async function updateSensorData() {
     try {
@@ -243,7 +135,6 @@ async function updateSensorData() {
         
         const data = await response.json();
         console.log('Цео објекат података:', data);
-        console.log('Тип података:', typeof data);
         
         if (!Array.isArray(data)) {
             console.error('Примљени подаци нису низ:', data);
@@ -255,26 +146,37 @@ async function updateSensorData() {
             return;
         }
 
-        const sensorData = data[1];
-        console.log('Структура података сензора:', sensorData);
-        console.log('Локација:', sensorData.location);
-        console.log('Сви кључеви у објекту:', Object.keys(sensorData));
-        
-        // Ажурирање локације
-        const locationTitle = document.getElementById('location-title');
-        if (locationTitle) {
-            if (sensorData.location) {
-                locationTitle.textContent = sensorData.location;
-            } else {
-                console.error('Локација није пронађена у подацима');
-                locationTitle.textContent = 'Локација недоступна';
-            }
-        }
+        // Узимамо податке за сва три сензора
+        const sensorData1 = data[0];
+        const sensorData2 = data[1];
+        const sensorData3 = data[3];
+
+        // Функција за ажурирање локација сензора
+        const updateSensorLocations = () => {
+            const updateLocation = (metricId, sensorData, index) => {
+                const locationElement = document.querySelector(`#${metricId} .sensor-value:nth-child(${index + 1}) .sensor-location`);
+                if (locationElement && sensorData.location) {
+                    // Уклањамо "АТВСС" део из локације
+                    const cleanLocation = sensorData.location.replace(/^АТВСС\s*/, '');
+                    locationElement.textContent = cleanLocation;
+                }
+            };
+
+            // Ажурирамо локације за сваку метрику
+            metrics.forEach(metric => {
+                updateLocation(metric.id, sensorData1, 0);
+                updateLocation(metric.id, sensorData2, 1);
+                updateLocation(metric.id, sensorData3, 2);
+            });
+        };
+
+        // Ажурирамо локације сензора
+        updateSensorLocations();
         
         // Ажурирање времена
         const timestamp = document.getElementById('timestamp');
-        if (timestamp && sensorData.timestamp) {
-            const date = new Date(sensorData.timestamp);
+        if (timestamp && sensorData2.timestamp) {
+            const date = new Date(sensorData2.timestamp);
             timestamp.textContent = date.toLocaleString('sr-RS');
         }
         
@@ -290,34 +192,42 @@ async function updateSensorData() {
             }
         };
 
-        // Функција за безбедно ажурирање индикатора
-        const safeUpdateIndicator = (id, value, getDangerLevel) => {
-            if (value !== undefined && value !== null) {
-                const numValue = Number(value);
-                if (!isNaN(numValue)) {
-                    updateDangerIndicator(id, numValue, getDangerLevel);
-                    console.log(`Ажуриран индикатор за ${id}:`, numValue);
-                }
+        // Функција за ажурирање вредности сва три сензора
+        const updateSensorValues = (metricId, sensor1Value, sensor2Value, sensor3Value) => {
+            const card = document.getElementById(metricId);
+            if (!card) return;
+
+            const sensorValues = card.querySelectorAll('.sensor-data-value');
+            if (sensorValues.length === 3) {
+                safeUpdateValue(`#${metricId} .sensor-value:nth-child(1) .sensor-data-value`, sensor1Value);
+                safeUpdateValue(`#${metricId} .sensor-value:nth-child(2) .sensor-data-value`, sensor2Value);
+                safeUpdateValue(`#${metricId} .sensor-value:nth-child(3) .sensor-data-value`, sensor3Value);
             }
         };
         
         // Ажурирање PM вредности
-        safeUpdateIndicator('pm1', sensorData.pm1, getPM1DangerLevel);
-        safeUpdateIndicator('pm25', sensorData.pm25, getPM25DangerLevel);
-        safeUpdateIndicator('pm10', sensorData.pm10, getPM10DangerLevel);
+        updateSensorValues('pm1', sensorData1.pm1, sensorData2.pm1, sensorData3.pm1);
+        updateSensorValues('pm25', sensorData1.pm25, sensorData2.pm25, sensorData3.pm25);
+        updateSensorValues('pm10', sensorData1.pm10, sensorData2.pm10, sensorData3.pm10);
         
         // Ажурирање температуре, притиска и влажности
-        safeUpdateIndicator('temperature', sensorData.temperature, getTemperatureDangerLevel);
-        safeUpdateIndicator('pressure', sensorData.pressure, getPressureDangerLevel);
-        safeUpdateIndicator('humidity', sensorData.humidity, getHumidityDangerLevel);
-        
-        // Ажурирање вредности
-        safeUpdateValue('#pm1 .value', sensorData.pm1);
-        safeUpdateValue('#pm25 .value', sensorData.pm25);
-        safeUpdateValue('#pm10 .value', sensorData.pm10);
-        safeUpdateValue('#temperature .value', sensorData.temperature);
-        safeUpdateValue('#pressure .value', sensorData.pressure);
-        safeUpdateValue('#humidity .value', sensorData.humidity);
+        updateSensorValues('temperature', sensorData1.temperature, sensorData2.temperature, sensorData3.temperature);
+        updateSensorValues('pressure', sensorData1.pressure, sensorData2.pressure, sensorData3.pressure);
+        updateSensorValues('humidity', sensorData1.humidity, sensorData2.humidity, sensorData3.humidity);
+
+        // Ажурирање индикатора опасности за сва три сензора
+        const updateIndicators = (metricId, getDangerLevel) => {
+            updateDangerIndicator(metricId, sensorData1[metricId], getDangerLevel, 0);
+            updateDangerIndicator(metricId, sensorData2[metricId], getDangerLevel, 1);
+            updateDangerIndicator(metricId, sensorData3[metricId], getDangerLevel, 2);
+        };
+
+        updateIndicators('pm1', getPM1DangerLevel);
+        updateIndicators('pm25', getPM25DangerLevel);
+        updateIndicators('pm10', getPM10DangerLevel);
+        updateIndicators('temperature', getTemperatureDangerLevel);
+        updateIndicators('pressure', getPressureDangerLevel);
+        updateIndicators('humidity', getHumidityDangerLevel);
 
         console.log('Ажурирање завршено успешно');
     } catch (error) {
@@ -325,12 +235,9 @@ async function updateSensorData() {
     }
 }
 
-
 // Иницијализација апликације
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('DOM учитан, започињем иницијализацију...');
-    createHTMLStructure();
-    console.log('HTML структура креирана');
     
     // Прво ажурирање
     await updateSensorData();
@@ -339,12 +246,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Постављање интервала за периодично ажурирање на 2 минута (120000 ms)
     setInterval(updateSensorData, 120000);
     console.log('Постављен интервал за ажурирање на 2 минута');
-}); 
+});
 
 window.addEventListener('click', function(e) {
     console.log(e.target)
     if (e.target.classList.contains('appstim-logo')) {
-        window.location.href = 'samsungLab.html';
+        window.location.href = 'odsekPirot.html';
     }
     if (e.target.classList.contains('akademija-logo')) {
         window.location.href = 'index.html';

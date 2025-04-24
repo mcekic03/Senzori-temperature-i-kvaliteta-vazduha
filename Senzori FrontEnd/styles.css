@@ -100,6 +100,7 @@ h1 {
 .metric-card .unit {
     color: #666;
     font-size: 0.87rem;
+    margin-bottom: 10px;
 }
 
 /* Индикатори нивоа опасности */
@@ -274,124 +275,96 @@ h1 {
 /* Медија упири за мобилни приказ */
 @media (max-width: 768px) {
     .container {
-        padding: 10px;
-        
-    }
-    
-    h1 {
-        font-size: 1.94rem;
-        margin-bottom: 20px;
+        padding: 5px;
     }
     
     .sensor-data {
-        margin-left: -0.4px;
+        padding: 15px;
+        margin-left: 0;
     }
     
     .metrics-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        padding: 12px;
+        gap: 8px;
+        padding: 8px;
     }
 
-    #pm1{
-        grid-column: 1;
-        grid-row: 1;
-    }
-    #pm25{
-        grid-column: 1;
-        grid-row: 2;
-    }
-    #pm10{
-        grid-column: 1;
-        grid-row: 3;
-    }
-    
     .metric-card {
-        padding: 12px;
+        padding: 15px;
     }
     
-    /* Смањујемо величину иконица */
+    .sensor-value {
+        padding: 6px;
+    }
+    
+    .sensor-location {
+        font-size: 0.85rem;
+        margin-bottom: 3px;
+    }
+    
+    .sensor-data-value {
+        font-size: 1.1rem;
+    }
+    
     .status-icon {
-        font-size: 1.94rem;
-        margin: 0.5rem 0;
+        font-size: 1.5rem;
     }
     
-    /* Смањујемо величину вредности */
-    .metric-card .value {
-        font-size: 1.75rem;
-        margin-bottom: 5px;
-    }
-    
-    /* Смањујемо величину јединица мере */
-    .metric-card .unit {
-        font-size: 0.87rem;
-    }
-    
-    /* Смањујемо величину наслова */
-    .metric-card h3 {
-        font-size: 1.07rem;
+    .location-info h2 {
+        font-size: 1.2rem;
         margin-bottom: 10px;
     }
     
-    /* Смањујемо величину локације и времена */
-    .location-info h2 {
-        font-size: 1.55rem;
-    }
-    
-    .location-info p {
-        font-size: 1rem;
-    }
-    
-    .logo {
-        display: none;
-    }
-    
     .last-update {
-        font-size: 0.85rem;
-        padding: 6px;
+        font-size: 0.8rem;
+        padding: 5px;
     }
 }
 
 /* Додатни медија упит за веома мале екране */
 @media (max-width: 480px) {
-    .metrics-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+    .container {
+        padding: 3px;
+    }
+    
+    .sensor-data {
         padding: 10px;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 6px;
     }
     
     .metric-card {
-        padding: 10px;
+        padding: 12px;
     }
     
-    .metric-card .value {
-        font-size: 1.55rem;
+    .sensor-value {
+        padding: 5px;
+    }
+    
+    .sensor-location {
+        font-size: 0.8rem;
+        margin-bottom: 2px;
+    }
+    
+    .sensor-data-value {
+        font-size: 1rem;
     }
     
     .status-icon {
-        font-size: 1.75rem;
-        margin: 0.4rem 0;
-    }
-    
-    .metric-card h3 {
-        font-size: 0.97rem;
-        margin-bottom: 8px;
+        font-size: 1.3rem;
     }
     
     .location-info h2 {
-        font-size: 1.36rem;
-    }
-    
-    .location-info p {
-        font-size: 0.9rem;
-    }
-    
-    .logo {
-        display: none;
+        font-size: 1.1rem;
+        margin-bottom: 8px;
     }
     
     .last-update {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         padding: 4px;
     }
 }
@@ -533,5 +506,77 @@ h1 {
         padding-right: 12px;
         border-radius: 15px;
         border-color: white;
+}
+
+.sensor-values {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.sensor-value {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.sensor-label {
+    font-weight: bold;
+    color: #333;
+    font-size: 0.9rem;
+    margin-right: 5px;
+}
+
+.sensor-location {
+    font-size: 0.9rem;
+    color: #1e3c72;
+    font-weight: bold;
+    margin-right: 10px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.sensor-data-value {
+    font-family: monospace;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2a5298;
+}
+
+.sensor-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.sensor-status .danger-level {
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.sensor-status .danger-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.sensor-status .status-icon {
+    font-size: 1.2rem;
+}
+
+.sensor-status .status-icon i {
+    transition: all 0.3s ease;
+}
+
+.sensor-status .status-icon.animated i {
+    animation: pulse 1.5s infinite;
 }
 
