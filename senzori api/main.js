@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const os = require('os');
 const path = require('path');
+const Senzor = require("./models/senzor")
 
 
 
@@ -29,10 +30,6 @@ app.use("/users/images", express.static(path.join(__dirname, "public")));
 
 const senzorRoutes = require('./routes/senzori');
 app.use('/', senzorRoutes);
-
-
-
-
 
 
 // Dobijanje lokalne IP adrese

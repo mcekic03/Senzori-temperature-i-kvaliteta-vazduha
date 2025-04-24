@@ -162,14 +162,13 @@ function createHTMLStructure() {
     const locationTitle1 = document.createElement('h4');
     const locationTitle2 = document.createElement('h4');
     locationTitle2.textContent = "Мерење температуре и квалитета ваздуха";
-    locationTitle1.textContent = "Александра Медведева 20, Ниш";
+    locationTitle1.textContent = "Филипа Филиповића 20, Врање";
     locationTitle.id = 'location-title';
     locationTitle.textContent = 'Учитавање...'; // Привремена вредност док се не учита локација
     
     locationInfo.appendChild(locationTitle);
     locationInfo.appendChild(locationTitle1);
     locationInfo.appendChild(locationTitle2);
-    
 
     // Креирање мреже за метрике
     const metricsGrid = document.createElement('div');
@@ -186,11 +185,16 @@ function createHTMLStructure() {
     lastUpdate.className = 'last-update';
     lastUpdate.innerHTML = 'Последње ажурирање: <span id="timestamp"></span>';
 
+    const lastUpdate1 = document.createElement('div');
+    lastUpdate1.className = 'last-update';
+    lastUpdate1.innerHTML = '<span id="zagadjenost"></span>';
+
     // Спајање свих елемената
     container.appendChild(logosContainer);
     sensorData.appendChild(locationInfo);
     sensorData.appendChild(metricsGrid);
     sensorData.appendChild(lastUpdate);
+    //sensorData.appendChild(lastUpdate1);
     container.appendChild(sensorData);
     document.body.appendChild(container);
 }
@@ -259,7 +263,8 @@ async function updateSensorData() {
             return;
         }
 
-        const sensorData = data[1];
+        // 3 pozicija u nizu e odsek vranje
+        const sensorData = data[3];
         console.log('Структура података сензора:', sensorData);
         console.log('Локација:', sensorData.location);
         console.log('Сви кључеви у објекту:', Object.keys(sensorData));
@@ -277,7 +282,10 @@ async function updateSensorData() {
         
         // Ажурирање времена
         const timestamp = document.getElementById('timestamp');
+        //const zagadjenost = document.getElementById('zagadjenost');
+    
         if (timestamp && sensorData.timestamp) {
+            //zagadjenost.textContent = data[2];
             const date = new Date(sensorData.timestamp);
             timestamp.textContent = date.toLocaleString('sr-RS');
         }
@@ -348,7 +356,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 window.addEventListener('click', function(e) {
     console.log(e.target)
     if (e.target.classList.contains('appstim-logo')) {
-        window.location.href = 'odsekPirot.html';
+        window.location.href = 'grafVazduh.html';
     }
     if (e.target.classList.contains('akademija-logo')) {
         window.location.href = 'index.html';

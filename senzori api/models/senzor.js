@@ -92,10 +92,23 @@ class Senzor {
                 const timestampLocal = moment(timestampUTC).tz('Europe/Belgrade').format('YYYY-MM-DD HH:mm:ss');
 
                 const location1 = "АТВСС Одсек Ниш"
-                const location2 = "Самсунг Аппс Лаб"
+                const location2 = "АТВСС Одсек Пирот"
+                const location3 = "АТВСС Одсек Врање";
+                let l = "";
+                if(id === '16160069'){
+                    l = location2;
+                }
+                else if(id === '15139426'){
+                    l = location3;
+                }
+                else{
+                    l = location1;
+                }
+
+                
 
                 const ob = {
-                    location: id==='16160069'? location2:location1 ,
+                    location: l,
                     id: rows[0].esp8266id,
                     timestamp: timestampLocal,
                     pm1: rows[0].PMS_P0,
@@ -170,20 +183,36 @@ ORDER BY senzA.timestamp ASC;`;
         let percentageDifference = 0;
       
         if (totalA > totalB) {
-          greaterSensor = 'SamsungAppsLab';
+          greaterSensor = ' (SamsungAppsLab) ';
           percentageDifference = ((totalA - totalB) / totalB) * 100;
         } else if (totalB > totalA) {
-          greaterSensor = 'ATVSS Odsek Nis';
+          greaterSensor = 'АТВСС Одсек Ниш';
           percentageDifference = ((totalB - totalA) / totalA) * 100;
         } else {
-          greaterSensor = 'Nema razlike';
+          greaterSensor = 'Нема разлике';
           percentageDifference = 0;
         }
         
 
         // Vraćamo poruku u formatu stringa
-        return `${greaterSensor} je imao veću zagadjenost za ${percentageDifference.toFixed(2)}% u zadnjih 24h`;
+        return `${greaterSensor} је имао већу загађеност за ${percentageDifference.toFixed(2)}% у задњих 24h`;
       }
+
+
+    static async fetchSensorData() {
+        console.log("ajde");
+        try {
+          const response = await fetch('https://data.sensor.community/airrohr/v1/sensor/92594/');
+          if (!response.ok) {
+            throw new Error(`Greška pri dohvatu podataka: ${response.statusText}`);
+          }
+          const data = await response.json();
+          console.log(`[${new Date().toLocaleTimeString()}] Podaci sa senzora:`);
+          console.log(JSON.stringify(data, null, 2));
+        } catch (error) {
+          console.error(`Greška: ${error.message}`);
+        }
+    }
     
 }
 

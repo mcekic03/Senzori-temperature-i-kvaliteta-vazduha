@@ -4,7 +4,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon main.js"
+    "dev": "nodemon main.js",
+    "production": "pm2 reload ecosystem.config.js && pm2 save && pm2 monit",
+    "stop": "pm2 stop all && pm2 delete all && pm2 flush && pm2 kill"
+    
   },
   "author": "",
   "license": "ISC",
