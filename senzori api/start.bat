@@ -8,7 +8,7 @@ if %errorLevel% neq 0 (
 )
 
 :: Ulazak u CIITLAB API folder
-cd /d "C:\Users\Win10senzori\Desktop\senzori"
+cd /d "C:\Users\Win10senzori\Desktop\SenzoriMihajloCekic\senzori api"
 
 :: Pokretanje servera pomoću npm run production
 echo Pokrećem server (npm run production)...
