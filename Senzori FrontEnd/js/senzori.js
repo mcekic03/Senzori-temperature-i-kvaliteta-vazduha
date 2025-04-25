@@ -468,7 +468,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Prvo preuzimanje i ažuriranje
   await fetchDataAndUpdateCards();
   
-  // Postavljanje intervala za redovno ažuriranje (na 2 minuta)
-  setInterval(fetchDataAndUpdateCards, 120000);
-  console.log('Postavljeno redovno ažuriranje svakih 2 minuta');
+  // Postavljanje intervala za redovno ažuriranje (na 3 minuta)
+  setInterval(fetchDataAndUpdateCards, 180000);
+  console.log('Postavljeno redovno ažuriranje svakih 3 minuta');
 });
