@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.cdnfonts.com/css/gilroy-bold" rel="stylesheet">
+    <script src="js/senzori.js"></script>
+    <title>Kartica Kvaliteta Vazduha</title>
+    <style>
+        .glavni-naslov {
+            text-align: center;
+            margin-bottom: 10px;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            max-width: 600px;
+            margin: 0 auto 10px;
+            font-family: 'Gilroy', sans-serif;
+        }
+        .timestamp {
+            text-align: center;
+            font-size: 11px;
+            color: #777;
+            padding: 4px 0;
+            border-top: 1px solid #eee;
+            background-color: #f9f9f9;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Kontejner za logotipe -->
+        <div class="logos-container">
+            <img src="Images/akademija.png" alt="Академија" class="logo akademija-logo">
+            <img src="Images/appstim.png" alt="Апстим" class="logo appstim-logo">
+        </div>
+        
+        <h1 class="glavni-naslov">Мерење температуре и квалитета ваздуха</h1>
+        
+        <!-- Prva kartica - Niš -->
+        <div class="card" id="card1">
+            <div class="header">
+                <h1>Одсек Ниш</h1>
+                <p>Александра Медведева 20, Ниш</p>
+            </div>
+            <div class="content">
+                <div class="aqi">
+                    <div class="index">40</div>
+                    <div class="status">Добро</div>
+                </div>
+                <div class="smiley">
+                    <i class="fa-solid fa-face-smile"></i>
+                </div>
+            </div>
+            <div class="details">
+                <div>Главни загађивач: ПМ2.5</div>
+                <div>9 µg/m³</div>
+            </div>
+            <div class="footer">
+                <div class="temp"><i class="fa-solid fa-temperature-half"></i> 18°C</div>
+                <div class="pressure"><i class="fa-solid fa-cloud"></i> 980.3 hpa</div>
+                <div class="humidity"><i class="fa-solid fa-droplet"></i> 42.2%</div>
+            </div>
+            <p class="timestamp">Последње ажурирање: --.--.---- --:--</p>
+        </div>
+
+        <!-- Druga kartica - Pirot -->
+        <div class="card" id="card2">
+            <div class="header">
+                <h1>Одсек Пирот</h1>
+                <p>Ћирила и Методија 29, Пирот</p>
+            </div>
+            <div class="content">
+                <div class="aqi">
+                    <div class="index">40</div>
+                    <div class="status">Добро</div>
+                </div>
+                <div class="smiley">
+                    <i class="fa-solid fa-face-smile"></i>
+                </div>
+            </div>
+            <div class="details">
+                <div>Главни загађивач: ПМ2.5</div>
+                <div>9 µg/m³</div>
+            </div>
+            <div class="footer">
+                <div class="temp"><i class="fa-solid fa-temperature-half"></i> 18°C</div>
+                <div class="pressure"><i class="fa-solid fa-cloud"></i> 980.3 hpa</div>
+                <div class="humidity"><i class="fa-solid fa-droplet"></i> 42.2%</div>
+            </div>
+            <p class="timestamp">Последње ажурирање: --.--.---- --:--</p>
+        </div>
+
+        <!-- Treća kartica - Vranje -->
+        <div class="card" id="card3">
+            <div class="header">
+                <h1>Одсек Врање</h1>
+                <p>Филипа Филиповића 20, Врање</p>
+            </div>
+            <div class="content">
+                <div class="aqi">
+                    <div class="index">40</div>
+                    <div class="status">Добро</div>
+                </div>
+                <div class="smiley">
+                    <i class="fa-solid fa-face-smile"></i>
+                </div>
+            </div>
+            <div class="details">
+                <div>Главни загађивач: ПМ2.5</div>
+                <div>9 µg/m³</div>
+            </div>
+            <div class="footer">
+                <div class="temp"><i class="fa-solid fa-temperature-half"></i> 18°C</div>
+                <div class="pressure"><i class="fa-solid fa-cloud"></i> 980.3 hpa</div>
+                <div class="humidity"><i class="fa-solid fa-droplet"></i> 42.2%</div>
+            </div>
+            <p class="timestamp">Последње ажурирање: --.--.---- --:--</p>
+        </div>
+    </div>
+</body>
+</html> 
