@@ -9,13 +9,14 @@ body {
     margin: 0;
     padding: 15px 0;
     color: #333;
+    font-size: 110%;
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    max-width: 370px;
+    gap: 25px;
+    max-width: 407px;
     width: 100%;
 }
 
@@ -31,7 +32,7 @@ body {
 }
 
 .logo {
-    width: 120px;
+    width: 132px;
     height: auto;
     object-fit: contain;
     display: block;
@@ -51,8 +52,8 @@ body {
 
 .card {
     background-color: white;
-    border-radius: 18px;
-    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     overflow: hidden;
     padding-bottom: 0;
@@ -60,7 +61,7 @@ body {
 }
 
 .header {
-    padding: 12px 22px;
+    padding: 13px 24px;
     text-align: left;
     border-bottom: 1px solid #f0f0f0;
     display: flex;
@@ -70,24 +71,24 @@ body {
 
 .header h1 {
     margin: 0;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 500;
     color: #222;
 }
 
 .header p {
     margin: 0;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 400;
     color: #222;
     text-align: right;
-    max-width: 110px;
+    max-width: 121px;
     line-height: 1.2;
 }
 
 .content {
     background-color: #a6e06c;
-    padding: 14px 22px;
+    padding: 15px 24px;
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -101,29 +102,29 @@ body {
 
 .index {
     background-color: #8cc055;
-    width: 60px;
-    height: 60px;
-    border-radius: 9px;
+    width: 66px;
+    height: 66px;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-right: 22px;
+    margin-right: 24px;
     color: #222;
     font-weight: 500;
-    font-size: 35px;
+    font-size: 38px;
     position: relative;
 }
 
 .status {
-    font-size: 31px;
+    font-size: 34px;
     color: #333;
     font-weight: 500;
 }
 
 .smiley {
-    width: 60px;
-    height: 60px;
+    width: 66px;
+    height: 66px;
     border-radius: 50%;
     border: 2px solid #83b04d;
     display: flex;
@@ -133,7 +134,7 @@ body {
 }
 
 .smiley i {
-    font-size: 35px;
+    font-size: 38px;
     animation: float 2s ease-in-out infinite;
 }
 
@@ -151,10 +152,10 @@ body {
 
 .details {
     background-color: #a6e06c;
-    padding: 11px 22px;
+    padding: 12px 24px;
     display: flex;
     justify-content: space-between;
-    font-size: 13px;
+    font-size: 14px;
     color: #333;
     border-top: 1px solid rgba(255, 255, 255, 0.4);
     font-weight: 500;
@@ -163,8 +164,8 @@ body {
 .footer {
     display: flex;
     justify-content: space-between;
-    padding: 11px 22px;
-    font-size: 14px;
+    padding: 12px 24px;
+    font-size: 15px;
     font-weight: 500;
 }
 
