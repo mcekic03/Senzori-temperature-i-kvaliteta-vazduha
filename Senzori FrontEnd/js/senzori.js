@@ -263,7 +263,7 @@ function updateCardData(cardId, data) {
   // Ažuriranje podataka o zagađivaču
   const detailsElements = card.querySelectorAll('.details div');
   if (detailsElements.length >= 2) {
-    detailsElements[0].textContent = `Главни загађивач: ${mainPollutant.name}`;
+    detailsElements[0].innerHTML = `Главни загађивач: <span class="main-pollutant">${mainPollutant.name}</span>`;
     detailsElements[1].textContent = mainPollutant.value;
   }
   
