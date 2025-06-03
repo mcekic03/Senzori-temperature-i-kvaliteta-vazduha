@@ -263,7 +263,7 @@ function updateCardData(cardId, data) {
   // Ažuriranje podataka o zagađivaču
   const detailsElements = card.querySelectorAll('.details div');
   if (detailsElements.length >= 2) {
-    detailsElements[0].textContent = `Главни загађивач: ${mainPollutant.name}`;
+    detailsElements[0].innerHTML = `Главни загађивач: <span class="main-pollutant">${mainPollutant.name}</span>`;
     detailsElements[1].textContent = mainPollutant.value;
   }
   
@@ -468,7 +468,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Prvo preuzimanje i ažuriranje
   await fetchDataAndUpdateCards();
   
-  // Postavljanje intervala za redovno ažuriranje (na 2 minuta)
-  setInterval(fetchDataAndUpdateCards, 120000);
-  console.log('Postavljeno redovno ažuriranje svakih 2 minuta');
+  // Postavljanje intervala za redovno ažuriranje (na 3 minuta)
+  setInterval(fetchDataAndUpdateCards, 180000);
+  console.log('Postavljeno redovno ažuriranje svakih 3 minuta');
 });
