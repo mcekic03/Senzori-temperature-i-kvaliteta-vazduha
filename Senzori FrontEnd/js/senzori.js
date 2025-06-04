@@ -256,8 +256,7 @@ function updateCardData(cardId, data) {
   // Ažuriranje AQI indeksa i statusa
   const indexElement = card.querySelector('.index');
   if (indexElement) {
-    indexElement[0].textContent = aqiValue;
-    indexElement[1].textContent = '';
+    indexElement.textContent = aqiValue;
   }
 
   const statusElement = card.querySelector('.status');
